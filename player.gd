@@ -27,6 +27,9 @@ func _input(event):
 		)
 		camera_pivot.rotation_degrees.x = vertical_look
 
+	if Input.is_action_just_pressed("ui_accept"):
+		$CanvasLayer/ColorRect.material.set_shader_parameter("static_noise_intensity", 0.2)
+
 func _physics_process(delta):
 
 	# --- GRAVEDAD ---
@@ -69,6 +72,8 @@ func _physics_process(delta):
 		stamina = min(stamina, 100)
 		if stamina >= 100:
 			can_run = true
+	if is_on_wall():
+		velocity.x = 0
 
 	# IMPORTANTE, esto solo funciona gracias a que se usa 
 	# move_and_slide() function 
@@ -78,4 +83,6 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	$Pivot/TwistPivot/PitchPivot/Camera3D/Label3D.text = str(round(stamina))
+
+func _process(_delta: float) -> void:
+	$Pivot/TwistPivot/PitchPivot/Camera3D/Label3D.text = "FPS: " + str(Engine.get_frames_per_second())

@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dstqc5agwgox3"]
+[gd_scene load_steps=11 format=3 uid="uid://dstqc5agwgox3"]
 
 [ext_resource type="Script" uid="uid://dul7dufnvupgx" path="res://node.gd" id="1_sy5k4"]
 [ext_resource type="Script" uid="uid://v3k46nifrjj6" path="res://player.gd" id="2_j2q8x"]
 [ext_resource type="Shader" uid="uid://b3csccfvqy51c" path="res://shaders/vhs.gdshader" id="3_112p8"]
+[ext_resource type="AudioStream" uid="uid://bwpryg87ryun5" path="res://609359__florstristi__vhs_vcr-hum-a.wav" id="4_e2u21"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sy5k4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -36,7 +37,7 @@ shader_parameter/roll_variation = 1.8
 shader_parameter/distort_intensity = 0.05
 shader_parameter/noise_opacity = 0.4
 shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.1170000055575
+shader_parameter/static_noise_intensity = 0.1510000071725
 shader_parameter/aberration = 0.03
 shader_parameter/brightness = 1.4
 shader_parameter/discolor = true
@@ -60,10 +61,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.720215)
 use_collision = true
 size = Vector3(12.479492, 1, 17.857422)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07366896, 3.8909264, 4.1217375)
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -42.06701)
 use_collision = true
-size = Vector3(12.360107, 6.939868, 1)
+size = Vector3(125.506836, 1, 66.791626)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011352062, 3.8909264, 4.1217375)
+use_collision = true
+size = Vector3(12.484741, 6.939868, 1)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D2"]
 transform = Transform3D(0.9997681, -9.413552e-10, 0.021535698, -0.021535698, -4.3701252e-08, 0.9997681, 0, -1, -4.371139e-08, -0.10301846, -1.573297, -0.051505566)
@@ -100,3 +106,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0124826, 0.17469192, -1.86
 material = SubResource("ShaderMaterial_e2u21")
 offset_right = 320.0
 offset_bottom = 240.0
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.773386, 3.429016, 4.126062)
+use_collision = true
+size = Vector3(21.209991, 7.858032, 0.98620605)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.421303, 0.017684937, -0.0075736046)
+use_collision = true
+size = Vector3(21.179337, 7.7965393, 1.0020142)
+
+[node name="vhs_soundeffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_e2u21")
+autoplay = true
