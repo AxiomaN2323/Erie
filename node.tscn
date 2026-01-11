@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dstqc5agwgox3"]
+[gd_scene load_steps=12 format=3 uid="uid://dstqc5agwgox3"]
 
 [ext_resource type="Script" uid="uid://dul7dufnvupgx" path="res://node.gd" id="1_sy5k4"]
+[ext_resource type="AudioStream" uid="uid://besdixoxki7he" path="res://Audio/baby_scream_3.wav" id="2_bss38"]
 [ext_resource type="Script" uid="uid://v3k46nifrjj6" path="res://player.gd" id="2_j2q8x"]
 [ext_resource type="Shader" uid="uid://b3csccfvqy51c" path="res://shaders/vhs.gdshader" id="3_112p8"]
-[ext_resource type="AudioStream" uid="uid://bwpryg87ryun5" path="res://609359__florstristi__vhs_vcr-hum-a.wav" id="4_e2u21"]
+[ext_resource type="AudioStream" uid="uid://bwpryg87ryun5" path="res://Audio/609359__florstristi__vhs_vcr-hum-a.wav" id="4_e2u21"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sy5k4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -53,7 +54,7 @@ script = ExtResource("1_sy5k4")
 environment = SubResource("Environment_112p8")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.9391841, 0.29740518, -0.17170697, 2.7805946e-08, 0.49999994, 0.86602545, 0.3434139, -0.8133574, 0.46959198, 0, 5, 0)
+transform = Transform3D(0.93918425, 0.29740518, -0.17170694, -0.21228996, 0.10977736, -0.97102106, -0.269937, 0.9484193, 0.16623732, 0, 5, 0)
 shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
@@ -120,3 +121,7 @@ size = Vector3(21.179337, 7.7965393, 1.0020142)
 [node name="vhs_soundeffect" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_e2u21")
 autoplay = true
+
+[node name="babyscream" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_bss38")
+volume_db = 5.68

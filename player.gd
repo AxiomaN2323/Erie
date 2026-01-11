@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal babyscream_signal
+signal increasaenoise_signal
 var stamina := 100.0
 var staminadrainrate := 50.0
 var staminabackrate := 30.0
@@ -20,16 +22,12 @@ func _ready():
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
-		vertical_look = clamp(
-			vertical_look - event.relative.y * mouse_sensitivity,
-			-90,
-			90
-		)
+		vertical_look = clamp(vertical_look - event.relative.y * mouse_sensitivity,-90,90)
 		camera_pivot.rotation_degrees.x = vertical_look
 
 	if Input.is_action_just_pressed("ui_accept"):
-		$CanvasLayer/ColorRect.material.set_shader_parameter("static_noise_intensity", 0.2)
-
+		babyscream_signal.emit() # SONIDO DE MIEDO DE BEBE
+			
 func _physics_process(delta):
 
 	# --- GRAVEDAD ---
