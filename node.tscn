@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://dstqc5agwgox3"]
+
+[ext_resource type="Script" uid="uid://dul7dufnvupgx" path="res://node.gd" id="1_sy5k4"]
+[ext_resource type="Script" uid="uid://v3k46nifrjj6" path="res://player.gd" id="2_j2q8x"]
+[ext_resource type="Shader" uid="uid://b3csccfvqy51c" path="res://shaders/vhs.gdshader" id="3_112p8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sy5k4"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_j2q8x"]
+sky_material = SubResource("ProceduralSkyMaterial_sy5k4")
+
+[sub_resource type="Environment" id="Environment_112p8"]
+background_mode = 2
+sky = SubResource("Sky_j2q8x")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_112p8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e2u21"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2u21"]
+shader = ExtResource("3_112p8")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.1170000055575
+shader_parameter/aberration = 0.03
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.350000016625
+
+[node name="Node" type="Node"]
+script = ExtResource("1_sy5k4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_112p8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.9391841, 0.29740518, -0.17170697, 2.7805946e-08, 0.49999994, 0.86602545, 0.3434139, -0.8133574, 0.46959198, 0, 5, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.720215)
+use_collision = true
+size = Vector3(12.479492, 1, 17.857422)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.07366896, 3.8909264, 4.1217375)
+use_collision = true
+size = Vector3(12.360107, 6.939868, 1)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D2"]
+transform = Transform3D(0.9997681, -9.413552e-10, 0.021535698, -0.021535698, -4.3701252e-08, 0.9997681, 0, -1, -4.371139e-08, -0.10301846, -1.573297, -0.051505566)
+operation = 2
+radius = 2.3813477
+height = 1.1844177
+sides = 20
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5702598, 18.04777)
+script = ExtResource("2_j2q8x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_112p8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_e2u21")
+
+[node name="Pivot" type="Node3D" parent="Player"]
+
+[node name="TwistPivot" type="Node3D" parent="Player/Pivot"]
+
+[node name="PitchPivot" type="Node3D" parent="Player/Pivot/TwistPivot"]
+
+[node name="Camera3D" type="Camera3D" parent="Player/Pivot/TwistPivot/PitchPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.26070023)
+
+[node name="Label3D" type="Label3D" parent="Player/Pivot/TwistPivot/PitchPivot/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0124826, 0.17469192, -1.8632221)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CRT_shader" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_e2u21")
+offset_right = 320.0
+offset_bottom = 240.0

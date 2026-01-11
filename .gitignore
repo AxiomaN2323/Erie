@@ -1,0 +1,17 @@
+# Godot 4+ specific ignores
+# Godot 4+ específico
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+*.translation
+*.import
+*.swp
+*.swo
+*~
+/build/
+/builds/
+#addons/
+.DS_Store
+Thumbs.db
+*.log
