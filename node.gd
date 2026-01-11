@@ -13,5 +13,4 @@ func _on_player_scream():
 	babyscream.play()
 
 func _input(event):
-	if Input.is_action_just_pressed("ui_accept"):
-		$CanvasLayer/CRT_shader.material.shader_parameter("static_noise_intensity", 0.3)
+	pass
