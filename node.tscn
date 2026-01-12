@@ -1,10 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://dstqc5agwgox3"]
+[gd_scene load_steps=21 format=3 uid="uid://dstqc5agwgox3"]
 
-[ext_resource type="Script" uid="uid://dul7dufnvupgx" path="res://node.gd" id="1_sy5k4"]
+[ext_resource type="Script" uid="uid://dul7dufnvupgx" path="res://Scripts/node.gd" id="1_sy5k4"]
 [ext_resource type="AudioStream" uid="uid://besdixoxki7he" path="res://Audio/baby_scream_3.wav" id="2_bss38"]
-[ext_resource type="Script" uid="uid://v3k46nifrjj6" path="res://player.gd" id="2_j2q8x"]
+[ext_resource type="Script" uid="uid://dtpxbhedv2lq4" path="res://Scripts/gravel.gd" id="2_f0urt"]
+[ext_resource type="Script" uid="uid://v3k46nifrjj6" path="res://Scripts/player.gd" id="2_j2q8x"]
+[ext_resource type="Script" uid="uid://cex4nrsneta5l" path="res://Scripts/wood.gd" id="2_jfkdj"]
 [ext_resource type="Shader" uid="uid://b3csccfvqy51c" path="res://shaders/vhs.gdshader" id="3_112p8"]
 [ext_resource type="AudioStream" uid="uid://bwpryg87ryun5" path="res://Audio/609359__florstristi__vhs_vcr-hum-a.wav" id="4_e2u21"]
+[ext_resource type="Script" uid="uid://4egk2n4yoqjh" path="res://Scripts/player_sounds.gd" id="5_wt6go"]
+[ext_resource type="AudioStream" uid="uid://gu6dapwnui1n" path="res://Audio/walking_on_wood.wav" id="6_tda05"]
+[ext_resource type="AudioStream" uid="uid://om1ud18phmg3" path="res://Audio/running_on_wood.wav" id="7_qn3nj"]
+[ext_resource type="AudioStream" uid="uid://brgctgn1rtq7" path="res://Audio/running_on_gravel.wav" id="8_r657h"]
+[ext_resource type="AudioStream" uid="uid://33xygf16cs44" path="res://Audio/walking_on_gravel.wav" id="9_f0urt"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sy5k4"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,6 +25,12 @@ background_mode = 2
 sky = SubResource("Sky_j2q8x")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f0urt"]
+size = Vector3(126.58301, 1, 66.13501)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jfkdj"]
+size = Vector3(12.59668, 7.254883, 17.192078)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_112p8"]
 
@@ -54,32 +67,46 @@ script = ExtResource("1_sy5k4")
 environment = SubResource("Environment_112p8")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.93918425, 0.29740518, -0.17170694, -0.21228996, 0.10977736, -0.97102106, -0.269937, 0.9484193, 0.16623732, 0, 5, 0)
+transform = Transform3D(0.9391842, 0.29740506, -0.1717069, -0.05924955, -0.3521726, -0.93405783, -0.33826393, 0.8874259, -0.31313387, 0, 10.664791, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
+[node name="wood" type="CSGBox3D" parent="." groups=["wood"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.346794)
+use_collision = true
+size = Vector3(125.506836, 1, 66.791626)
+script = ExtResource("2_jfkdj")
+
+[node name="Area3D" type="Area3D" parent="wood"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="wood/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.043121338, 1.1690063, -0.23571396)
+shape = SubResource("BoxShape3D_f0urt")
+
+[node name="gravel" type="CSGBox3D" parent="." groups=["gravel"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12.720215)
 use_collision = true
 size = Vector3(12.479492, 1, 17.857422)
+script = ExtResource("2_f0urt")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -42.06701)
-use_collision = true
-size = Vector3(125.506836, 1, 66.791626)
+[node name="Area3D" type="Area3D" parent="gravel"]
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="gravel/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5594177)
+shape = SubResource("BoxShape3D_jfkdj")
+
+[node name="entrance" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011352062, 3.8909264, 4.1217375)
 use_collision = true
 size = Vector3(12.484741, 6.939868, 1)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGBox3D2"]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="entrance"]
 transform = Transform3D(0.9997681, -9.413552e-10, 0.021535698, -0.021535698, -4.3701252e-08, 0.9997681, 0, -1, -4.371139e-08, -0.10301846, -1.573297, -0.051505566)
 operation = 2
 radius = 2.3813477
 height = 1.1844177
 sides = 20
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5702598, 18.04777)
 script = ExtResource("2_j2q8x")
 
@@ -100,6 +127,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.26070023)
 
 [node name="Label3D" type="Label3D" parent="Player/Pivot/TwistPivot/PitchPivot/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0124826, 0.17469192, -1.8632221)
+
+[node name="player_sounds" type="Node3D" parent="Player"]
+script = ExtResource("5_wt6go")
+
+[node name="walking_on_wood" type="AudioStreamPlayer" parent="Player/player_sounds"]
+stream = ExtResource("6_tda05")
+
+[node name="running_on_wood" type="AudioStreamPlayer" parent="Player/player_sounds"]
+stream = ExtResource("7_qn3nj")
+
+[node name="running_on_gravel" type="AudioStreamPlayer" parent="Player/player_sounds"]
+stream = ExtResource("8_r657h")
+volume_db = -15.266
+
+[node name="walking_on_gravel" type="AudioStreamPlayer" parent="Player/player_sounds"]
+stream = ExtResource("9_f0urt")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -124,4 +167,8 @@ autoplay = true
 
 [node name="babyscream" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_bss38")
-volume_db = 5.68
+volume_db = 24.0
+
+[connection signal="body_entered" from="wood/Area3D" to="wood" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="gravel/Area3D" to="gravel" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="gravel/Area3D" to="gravel" method="_on_area_3d_body_exited"]
