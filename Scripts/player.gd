@@ -6,6 +6,11 @@ signal walking_stopped
 signal running_started
 signal running_stopped
 
+# VIDA
+var vida = 100
+var vida_por_ataque = 20
+
+
 # STAMINA
 var stamina := 100.0
 var staminadrainrate := 50.0
@@ -23,6 +28,7 @@ var GRAVEDAD := 9.8 * 3
 var RUN_SPEED := 6.0
 var SPEED := 3.0
 
+var mouse_visible : bool = false
 var mouse_sensitivity := 0.3
 var vertical_look := 0.0
 
@@ -34,17 +40,23 @@ func _ready():
 	# y se consiguen los ejes del raton de paso
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
+	
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg_to_rad(-event.relative.x * mouse_sensitivity))
 		vertical_look = clamp(vertical_look - event.relative.y * mouse_sensitivity,-90,90)
 		camera_pivot.rotation_degrees.x = vertical_look
 
-	if Input.is_action_just_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-	
+	# si le das al esc sacas el menu por lo tanto el raton debe de manifestarse
+	if Input.is_action_just_pressed("ui_cancel") and not mouse_visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		mouse_visible = true
+	elif Input.is_action_just_pressed("ui_cancel") and mouse_visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		mouse_visible = false
 			
+						
 func _physics_process(delta):
 	# was_walking se crea para conseguir el estado anterior de walking
 	var was_walking :bool
